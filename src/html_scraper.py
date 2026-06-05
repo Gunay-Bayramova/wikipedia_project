@@ -8,19 +8,25 @@ class WikipediaScraper :
 
     def fetch_html(self, url):
         try:
-            response = self.session.get(url)
+            headers = {
+                "User-Agent": "Mozilla/5.0"
+            }
+            response = self.session.get(url, headers=headers)
             response.raise_for_status()
+
             return response.text
-        except:
+        
+        except Exception:
             return ""
 
     def get_first_paragraph(self, html):
-        soup = BeautifulSoup(html, 'html.parser')
-        paragraphs = soup.find_all('p')
+        soup = BeautifulSoup(html, "html.parser")
+        paragraphs = soup.find_all("p")
 
         for paragraph in paragraphs:
-            text = paragraph.get_text(strip =True)
-            if text:
+            text = paragraph.get_text(" ",strip =True)
+            
+            if len(text) > 100:
                 return text
         return ""
     
@@ -31,8 +37,8 @@ class WikipediaScraper :
         return cleaned_text
     
     def to_json_file(self, data, filepath):
-        with open(filepath, 'w') as file:
-            json.dump(data, file)
+        with open(filepath, 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
             
 
 """
