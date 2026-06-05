@@ -1,4 +1,3 @@
-from numpy import isin
 import requests
 
 class CountryLeadersAPI:

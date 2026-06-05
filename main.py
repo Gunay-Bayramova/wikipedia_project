@@ -16,9 +16,6 @@ for country in countries:
 
     for leader in leaders:
 
-        print(type(leaders))    
-        print(leaders)
-
         wikipedia_url = leader["wikipedia_url"]
 
         html = scraper.fetch_html(wikipedia_url)
